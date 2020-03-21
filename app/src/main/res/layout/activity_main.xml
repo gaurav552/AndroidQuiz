@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <TableLayout
-        android:layout_width="264dp"
+        android:layout_width="300dp"
         android:layout_height="237dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +20,7 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="265dp"
+                android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:padding="18dip"
                 android:text="Quiz Game"
