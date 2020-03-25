@@ -21,10 +21,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private Button new_game, cont;
-    private String category = "All";
+    private String category_name = "All Category";
+    private String category_id = "";
     private TextView name;
     private JSONObject jObj;
     private List<String> list = new ArrayList<>();
+    private List<String> id_list = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,22 +44,30 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void fillSpinner(){
-        
+
         final Spinner spinner = findViewById(R.id.spinner);
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         final String[] cat = new String[list.size()];
+        final String[] cat_id = new String[id_list.size()];
         list.toArray(cat);
+        id_list.toArray(cat_id);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 try {
                     int index = parentView.getSelectedItemPosition();
-                    category = cat[index];
+                    category_name = cat[index];
+                    if (index > 0){
+                        category_id = cat_id[index-1];
+                    } else if (index == 0){
+                        category_id = "";
+                    }
+
                     Toast.makeText(getBaseContext(),
-                            "Your Category is " + category,
+                            "Your Category is " + category_name +" id is "+ category_id,
                             Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -93,7 +103,10 @@ public class MainActivity extends AppCompatActivity {
                     list.add("All Category");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject explrObject = jsonArray.getJSONObject(i);
-                        list.add(explrObject.getString("name"));
+                        String namm = explrObject.getString("name");
+                        namm = namm.replace("Entertainment: ", "");
+                        list.add(namm);
+                        id_list.add(explrObject.getString("id"));
                     }
                 }
             } catch (Exception e) {
