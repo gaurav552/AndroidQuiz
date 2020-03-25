@@ -1,27 +1,38 @@
 package com.example.androidquiz;
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private Button new_game, cont;
     private String category = "All";
+    private TextView name;
+    private JSONObject jObj;
+    private List<String> list = new ArrayList<>();
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fillSpinner();
+        name = findViewById(R.id.name);
         new_game = findViewById(R.id.new_game);
         cont = findViewById(R.id.cont);
+        new getCat().execute();
     }
 
     public void clicker(View v){
@@ -29,13 +40,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(game);
     }
 
+
     public void fillSpinner(){
-        Spinner spinner = findViewById(R.id.spinner);
-        List<String> list = new ArrayList<>();
-        list.add("All");
-        list.add("Movie");
-        list.add("Music");
-        list.add("General Knowledge");
+        
+        final Spinner spinner = findViewById(R.id.spinner);
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
@@ -44,17 +53,59 @@ public class MainActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                int index = parentView.getSelectedItemPosition();
-                category = cat[index];
-                Toast.makeText(getBaseContext(),
-                        "Your Category is " + category,
-                        Toast.LENGTH_SHORT).show();
+                try {
+                    int index = parentView.getSelectedItemPosition();
+                    category = cat[index];
+                    Toast.makeText(getBaseContext(),
+                            "Your Category is " + category,
+                            Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    name.setText(e.toString());
+                }
+
             }
 
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
         });
     }
+
+
+    private class getCat extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                String line, newjson = "";
+                URL urls = new URL("https://opentdb.com/api_category.php");
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(urls.openStream(), "UTF-8"))) {
+                    while ((line = reader.readLine()) != null) {
+                        newjson += line;
+                        // System.out.println(line);
+                    }
+//                  System.out.println(newjson);
+                    String json = newjson.toString();
+                    jObj = new JSONObject(json);
+                    JSONArray jsonArray = jObj.getJSONArray("trivia_categories");
+                    list.add("All Category");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject explrObject = jsonArray.getJSONObject(i);
+                        list.add(explrObject.getString("name"));
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onPostExecute(Void param) {
+            fillSpinner();
+        }
+    }
 }
+
