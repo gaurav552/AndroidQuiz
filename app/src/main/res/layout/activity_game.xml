@@ -7,13 +7,13 @@
     tools:context=".game">
 
     <TableLayout
-        android:layout_width="300dp"
-        android:layout_height="482dp"
+        android:layout_width="301dp"
+        android:layout_height="272dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.644">
+        app:layout_constraintVertical_bias="0.61">
 
         <TableRow
             android:layout_width="match_parent"
@@ -23,10 +23,10 @@
                 android:id="@+id/textView"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:padding="18dp"
-                android:text="Question  1"
+                android:padding="15dp"
+                android:text="Question  7 / 10"
                 android:textAlignment="center"
-                android:textSize="39sp" />
+                android:textSize="35sp" />
         </TableRow>
 
         <TableRow
@@ -45,41 +45,66 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="138dp"
+            android:padding="0dp">
 
-            <RadioGroup
-                android:id="@+id/answer"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:orientation="vertical"
-                android:padding="20dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/answer1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Answer 1" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                <RadioButton
-                    android:id="@+id/answer2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Answer 2" />
+                    <RadioButton
+                        android:id="@+id/radioButton3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="RadioButton"
+                        android:textAlignment="center"/>
 
-                <RadioButton
-                    android:id="@+id/answer3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Answer 3" />
+                    <RadioButton
+                        android:id="@+id/radioButton4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layoutDirection="rtl"
+                        android:text="RadioButton"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"/>
+                </LinearLayout>
 
-                <RadioButton
-                    android:id="@+id/answer4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Answer 4" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-            </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/radioButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="RadioButton"
+                        android:textAlignment="center"/>
+
+                    <RadioButton
+                        android:id="@+id/radioButton2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layoutDirection="rtl"
+                        android:text="RadioButton"
+                        android:layout_gravity="center"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+            </LinearLayout>
         </TableRow>
 
         <TableRow
@@ -94,8 +119,6 @@
 
         </TableRow>
 
-        <TableRow>
-
-        </TableRow>
     </TableLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,19 @@
 package com.example.androidquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private Button new_game, cont;
     private String category_name = "All Category";
     private String category_id = "";
+    private String total_question = "10";
     private TextView name;
     private JSONObject jObj;
     private List<String> list = new ArrayList<>();
@@ -38,8 +45,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clicker(View v){
-        Intent game = new Intent(this,game.class);
-        startActivity(game);
+
+        if (v.getId() == new_game.getId()){
+
+            final Intent game = new Intent(this,game.class);
+            game.putExtra("category_name",category_name);
+            game.putExtra("category_id", category_id);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Total Questions");
+
+// Set up the input
+            final EditText input = new EditText(this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+            input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_NUMBER);
+            input.setText(total_question);
+            input.setPadding(60,30,60,50);
+            builder.setView(input);
+
+// Set up the buttons
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                   if ( !input.getText().toString().isEmpty()){
+                       total_question = input.getText().toString();
+
+                       if (Integer.parseInt(total_question) <= 30 && Integer.parseInt(total_question) >= 10 ){
+                           game.putExtra("total_questions", total_question);
+                           startActivity(game);
+                       } else {
+                           Toast.makeText(getBaseContext(),
+                                   "Only 30 questions at most and 10 questions at least",
+                                   Toast.LENGTH_LONG).show();
+                       }
+                   } else {
+                       Toast.makeText(getBaseContext(),
+                               "please write a number between 10 and 30",
+                               Toast.LENGTH_LONG).show();
+                   }
+
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            builder.show();
+        }
+
     }
 
 
@@ -63,12 +119,12 @@ public class MainActivity extends AppCompatActivity {
                     if (index > 0){
                         category_id = cat_id[index-1];
                     } else if (index == 0){
-                        category_id = "";
+                        category_id = "0";
                     }
 
                     Toast.makeText(getBaseContext(),
-                            "Your Category is " + category_name +" id is "+ category_id,
-                            Toast.LENGTH_SHORT).show();
+                            category_name+" Selected",
+                            Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                     name.setText(e.toString());
