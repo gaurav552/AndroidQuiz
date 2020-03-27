@@ -7,20 +7,21 @@
     tools:context=".game">
 
     <TableLayout
-        android:layout_width="301dp"
-        android:layout_height="272dp"
+        android:id="@+id/tableLayout"
+        android:layout_width="302dp"
+        android:layout_height="503dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.61">
+        app:layout_constraintVertical_bias="0.52">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/question_number"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
@@ -34,18 +35,18 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/question"
                 android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:padding="18dp"
-                android:text="TextView"
+                android:text="question"
                 android:textAlignment="center"
-                android:textSize="17sp" />
+                android:textSize="15dp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="138dp"
+            android:layout_height="219dp"
             android:padding="0dp">
 
             <LinearLayout
@@ -55,52 +56,54 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/ansLinTop"
                     android:layout_width="match_parent"
-                    android:layout_height="43dp"
+                    android:layout_height="113dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radioButton3"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/ans1"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="RadioButton"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center" />
 
                     <RadioButton
-                        android:id="@+id/radioButton4"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/ans2"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:layoutDirection="rtl"
                         android:text="RadioButton"
-                        android:layout_gravity="center"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ansLinBot"
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
+                    android:layout_height="99dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radioButton"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/ans3"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="RadioButton"
-                        android:textAlignment="center"/>
+                        android:text="sfh ush f8hs f8hs8f 8sf sfh8u"
+                        android:textAlignment="center" />
 
                     <RadioButton
-                        android:id="@+id/radioButton2"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/ans4"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:layoutDirection="rtl"
-                        android:text="RadioButton"
-                        android:layout_gravity="center"
+                        android:text=" uwirhiu w8 yv8y wv8uw 8r vy8w yrv87yw 8r"
                         android:textAlignment="center" />
                 </LinearLayout>
 
@@ -109,16 +112,39 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="106dp">
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Next" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="runner"
+                    android:paddingTop="10dp"
+                    android:text="Next" />
+            </LinearLayout>
 
         </TableRow>
 
     </TableLayout>
+
+    <TextView
+        android:id="@+id/loggy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginEnd="352dp"
+        android:layout_marginBottom="127dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
