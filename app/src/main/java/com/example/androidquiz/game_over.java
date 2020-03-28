@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class game_over extends AppCompatActivity {
 
@@ -20,6 +21,12 @@ public class game_over extends AppCompatActivity {
                 home();
             }
         });
+        Intent intent = getIntent();
+        String score = intent.getStringExtra("score");
+        TextView point = findViewById(R.id.score);
+        point.setText(score);
+        TextView logg = findViewById(R.id.log);
+
     }
 
     public void home(){

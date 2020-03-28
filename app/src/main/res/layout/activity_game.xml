@@ -8,8 +8,8 @@
 
     <TableLayout
         android:id="@+id/tableLayout"
-        android:layout_width="302dp"
-        android:layout_height="503dp"
+        android:layout_width="350dp"
+        android:layout_height="538dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
 
             <TextView
                 android:id="@+id/question_number"
-                android:layout_width="300dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
                 android:text="Question  7 / 10"
@@ -58,7 +58,7 @@
                 <LinearLayout
                     android:id="@+id/ansLinTop"
                     android:layout_width="match_parent"
-                    android:layout_height="113dp"
+                    android:layout_height="83dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -67,44 +67,52 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="RadioButton"
-                        android:textAlignment="center" />
+                        android:onClick="UAnswer"
+                        android:paddingRight="15dp"
+                        android:text="1"
+                        android:textAlignment="textStart" />
 
                     <RadioButton
                         android:id="@+id/ans2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:layoutDirection="rtl"
-                        android:text="RadioButton"
-                        android:textAlignment="center" />
+                        android:onClick="UAnswer"
+                        android:paddingLeft="15dp"
+                        android:text="2"
+                        android:textAlignment="gravity" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ansLinBot"
                     android:layout_width="match_parent"
-                    android:layout_height="99dp"
+                    android:layout_height="73dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    >
 
                     <RadioButton
                         android:id="@+id/ans3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="sfh ush f8hs f8hs8f 8sf sfh8u"
-                        android:textAlignment="center" />
+                        android:onClick="UAnswer"
+                        android:paddingRight="15dp"
+                        android:text="3"
+                        android:textAlignment="textStart" />
 
                     <RadioButton
                         android:id="@+id/ans4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:layoutDirection="rtl"
-                        android:text=" uwirhiu w8 yv8y wv8uw 8r vy8w yrv87yw 8r"
-                        android:textAlignment="center" />
+                        android:onClick="UAnswer"
+                        android:paddingLeft="15dp"
+
+                        android:text="4"
+                        android:textAlignment="gravity" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -118,33 +126,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingTop="20dp">
 
                 <Button
                     android:id="@+id/next"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:onClick="runner"
-                    android:paddingTop="10dp"
                     android:text="Next" />
             </LinearLayout>
 
         </TableRow>
 
     </TableLayout>
-
-    <TextView
-        android:id="@+id/loggy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="90dp"
-        android:layout_marginEnd="352dp"
-        android:layout_marginBottom="127dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,8 +7,8 @@
     tools:context=".game_over">
 
     <TableLayout
-        android:layout_width="300dp"
-        android:layout_height="353dp"
+        android:layout_width="299dp"
+        android:layout_height="281dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,10 +22,10 @@
                 android:id="@+id/textView4"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:text="Congratulation"
                 android:textAlignment="center"
-                android:textSize="40sp"
-                android:padding="10dp"/>
+                android:textSize="40sp" />
         </TableRow>
 
         <TableRow
@@ -36,44 +36,43 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:text="You scored"
                 android:textAlignment="center"
-                android:textSize="20sp"
-                android:padding="10dp"
-                />
+                android:textSize="20sp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="50"
+                android:text="X"
                 android:textAlignment="center"
                 android:textSize="50sp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:text="Points"
                 android:textAlignment="center"
-                android:textSize="20sp"
-                android:padding="10dp"/>
+                android:textSize="20sp" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/home"
