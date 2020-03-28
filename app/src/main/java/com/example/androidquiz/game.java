@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -23,6 +24,7 @@ public class game extends AppCompatActivity {
     private String category_name, category_id, total_questions, url;
     private int score = 0;
     private List<String> ianswers = new ArrayList<>();
+    private ArrayList<String> uans = new ArrayList<>();
     private String correct_answer;
     private JSONArray openTrivia;
     private TextView question_number, question, loggy;
@@ -87,7 +89,7 @@ public class game extends AppCompatActivity {
         }
     }
 
-    public void runner(View v){
+    public void runner(View v) throws JSONException {
         if (quno < openTrivia.length()){
             scoreKeeper();
             textChanger();
@@ -97,20 +99,43 @@ public class game extends AppCompatActivity {
         }
     }
     public void scoreKeeper(){
-        if (ans1.isChecked() && ans1.getText() == correct_answer){
-            score = score + 10;
-        } else if (ans2.isChecked() && ans2.getText() == correct_answer){
-            score = score + 10;
-        } else if (ans3.isChecked() && ans3.getText() == correct_answer){
-            score = score + 10;
-        } else if (ans4.isChecked() && ans4.getText() == correct_answer){
-            score = score + 10;
+        if (ans1.isChecked()){
+            if (ans1.getText() == correct_answer){
+                score = score + 10;
+            }
+            uans.add(ans1.getText().toString());
+        } else if (ans2.isChecked()){
+            if (ans2.getText() == correct_answer){
+                score = score + 10;
+            }
+            uans.add(ans2.getText().toString());
+        } else if (ans3.isChecked()){
+            if (ans3.getText() == correct_answer){
+                score = score + 10;
+            }
+            uans.add(ans3.getText().toString());
+        } else if (ans4.isChecked()){
+            if (ans4.getText() == correct_answer){
+                score = score + 10;
+            }
+            uans.add(ans4.getText().toString());
         }
     }
 
-    public void over(){
+    public void over() throws JSONException {
         final Intent game_over = new Intent(this, game_over.class);
         game_over.putExtra("score", Integer.toString(score));
+        ArrayList<String> Questions = new ArrayList<>();
+        ArrayList<String> Answers = new ArrayList<>();
+        for (int i = 0; i < openTrivia.length(); i++){
+            JSONObject explrObject = openTrivia.getJSONObject(i);
+            Questions.add(explrObject.getString("question"));
+            Answers.add(explrObject.getString("correct_answer"));
+        }
+        game_over.putStringArrayListExtra("Questions", Questions);
+        game_over.putStringArrayListExtra("Answers", Answers);
+        game_over.putStringArrayListExtra("User", uans);
+
         startActivity(game_over);
     }
 

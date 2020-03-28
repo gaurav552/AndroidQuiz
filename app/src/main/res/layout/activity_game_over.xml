@@ -7,12 +7,13 @@
     tools:context=".game_over">
 
     <TableLayout
-        android:layout_width="299dp"
-        android:layout_height="281dp"
+        android:layout_width="350dp"
+        android:layout_height="550dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.52">
 
         <TableRow
             android:layout_width="match_parent"
@@ -20,7 +21,7 @@
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="300dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="Congratulation"
@@ -74,9 +75,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <LinearLayout>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                    <LinearLayout
+                        android:id="@+id/summary"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp" />
+                </ScrollView>
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <Button
                 android:id="@+id/home"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Back Home" />
 
