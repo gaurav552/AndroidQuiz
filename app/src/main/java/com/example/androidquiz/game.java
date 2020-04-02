@@ -27,10 +27,9 @@ public class game extends AppCompatActivity {
     private ArrayList<String> uans = new ArrayList<>();
     private String correct_answer;
     private JSONArray openTrivia;
-    private TextView question_number, question, loggy;
+    private TextView question_number, question;
     private RadioButton ans1, ans2, ans3, ans4;
     private Button next;
-    private LinearLayout ansLinBot, ansLinTop;
     private int quno = 0;
 
 
@@ -42,22 +41,23 @@ public class game extends AppCompatActivity {
         question_number = (TextView) findViewById(R.id.question_number);
         question = (TextView) findViewById(R.id.question);
         next = (Button) findViewById(R.id.next);
-        ansLinBot = (LinearLayout) findViewById(R.id.ansLinBot);
-        ansLinTop = (LinearLayout) findViewById(R.id.ansLinTop);
         ans1 = (RadioButton) findViewById(R.id.ans1);
         ans2 = (RadioButton) findViewById(R.id.ans2);
         ans3 = (RadioButton) findViewById(R.id.ans3);
         ans4 = (RadioButton) findViewById(R.id.ans4);
         question_number.setText("Question  1 / 10");
-
         Intent intent = getIntent();
 
         next.setEnabled(false);
         category_name = intent.getStringExtra("category_name");
         category_id = intent.getStringExtra("category_id");
         total_questions = intent.getStringExtra("total_questions");
+        String difficulty = intent.getStringExtra("difficulty").toLowerCase();
+        if (difficulty == "Any Difficulty"){
+            difficulty = "";
+        }
         setTitle(category_name);
-        url = Integer.parseInt(category_id) != 0 ? "https://opentdb.com/api.php?amount="+total_questions+"&category="+category_id : "https://opentdb.com/api.php?amount="+total_questions ;
+        url = Integer.parseInt(category_id) != 0 ? "https://opentdb.com/api.php?amount="+total_questions+"&category="+category_id+"&difficulty="+difficulty : "https://opentdb.com/api.php?amount="+total_questions+"&difficulty="+difficulty ;
         ans2.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
         ans4.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
 
@@ -90,12 +90,14 @@ public class game extends AppCompatActivity {
     }
 
     public void runner(View v) throws JSONException {
-        if (quno < openTrivia.length()){
-            scoreKeeper();
-            textChanger();
-        } else {
-            scoreKeeper();
-            over();
+        if (ans1.isChecked() || ans2.isChecked() || ans3.isChecked() || ans4.isChecked()){
+            if (quno < openTrivia.length()){
+                scoreKeeper();
+                textChanger();
+            } else {
+                scoreKeeper();
+                over();
+            }
         }
     }
     public void scoreKeeper(){
@@ -207,7 +209,6 @@ public class game extends AppCompatActivity {
                 ans4.setVisibility(View.INVISIBLE);
                 ans3.setVisibility(View.INVISIBLE);
             }
-            loggy.setText(correct_answer);
 
         } catch (Exception e){
 

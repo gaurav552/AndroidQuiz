@@ -8,7 +8,7 @@
 
     <TableLayout
         android:layout_width="300dp"
-        android:layout_height="237dp"
+        android:layout_height="329dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +70,21 @@
                 android:paddingBottom="10dip"
                 android:textAlignment="center" />
 
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Spinner
+                android:id="@+id/difficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="18dip"
+                android:paddingTop="8dip"
+                android:paddingRight="18dip"
+                android:paddingBottom="10dip"
+                android:textAlignment="center"/>
         </TableRow>
     </TableLayout>
 

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
@@ -22,6 +23,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private String category_name = "All Category";
     private String category_id = "";
     private String total_question = "10";
+    private String game_difficulty = "";
+    private int difficulty_id = 0;
     private TextView name;
     private JSONObject jObj;
     private List<String> list = new ArrayList<>();
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             final Intent game = new Intent(this,game.class);
             game.putExtra("category_name",category_name);
             game.putExtra("category_id", category_id);
+            game.putExtra("difficulty", game_difficulty);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Total Questions");
@@ -68,22 +73,22 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
-                   if ( !input.getText().toString().isEmpty()){
-                       total_question = input.getText().toString();
+               if ( !input.getText().toString().isEmpty()){
+                   total_question = input.getText().toString();
 
-                       if (Integer.parseInt(total_question) <= 30 && Integer.parseInt(total_question) >= 10 ){
-                           game.putExtra("total_questions", total_question);
-                           startActivity(game);
-                       } else {
-                           Toast.makeText(getBaseContext(),
-                                   "Only 30 questions at most and 10 questions at least",
-                                   Toast.LENGTH_LONG).show();
-                       }
+                   if (Integer.parseInt(total_question) <= 30 && Integer.parseInt(total_question) >= 10 ){
+                       game.putExtra("total_questions", total_question);
+                       startActivity(game);
                    } else {
                        Toast.makeText(getBaseContext(),
-                               "please write a number between 10 and 30",
+                               "Only 30 questions at most and 10 questions at least",
                                Toast.LENGTH_LONG).show();
                    }
+               } else {
+                   Toast.makeText(getBaseContext(),
+                           "please write a number between 10 and 30",
+                           Toast.LENGTH_LONG).show();
+               }
 
                 }
             });
@@ -102,10 +107,13 @@ public class MainActivity extends AppCompatActivity {
     public void fillSpinner(){
 
         final Spinner spinner = findViewById(R.id.spinner);
+        final Spinner difficulty = findViewById(R.id.difficulty);
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
+        spinner.setSelection(dataAdapter.getPosition(category_name));
+
         final String[] cat = new String[list.size()];
         final String[] cat_id = new String[id_list.size()];
         list.toArray(cat);
@@ -129,7 +137,28 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                     name.setText(e.toString());
                 }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        List<String> difficulties = new ArrayList<>();
+        difficulties.add("Any Difficulty");
+        difficulties.add("Easy");
+        difficulties.add("Medium");
+        difficulties.add("Hard");
+        ArrayAdapter<String> difficultAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, difficulties);
+        difficultAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        difficulty.setAdapter(difficultAdapter);
+        final String[] diff = new String[difficulties.size()];
+        difficulties.toArray(diff);
+        difficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                game_difficulty = difficulty.getSelectedItem().toString();
             }
 
             @Override
@@ -137,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        difficulty.setSelection(difficultAdapter.getPosition(game_difficulty));
     }
 
 
@@ -147,13 +178,13 @@ public class MainActivity extends AppCompatActivity {
             try {
                 String line, newjson = "";
                 URL urls = new URL("https://opentdb.com/api_category.php");
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(urls.openStream(), "UTF-8"))) {
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(urls.openStream(), StandardCharsets.UTF_16))) {
                     while ((line = reader.readLine()) != null) {
                         newjson += line;
                         // System.out.println(line);
                     }
-//                  System.out.println(newjson);
-                    String json = newjson.toString();
+                  System.out.println(newjson);
+                    String json = newjson;
                     jObj = new JSONObject(json);
                     JSONArray jsonArray = jObj.getJSONArray("trivia_categories");
                     list.add("All Category");
@@ -164,6 +195,9 @@ public class MainActivity extends AppCompatActivity {
                         list.add(namm);
                         id_list.add(explrObject.getString("id"));
                     }
+                    Toast.makeText(getBaseContext(),
+                            list.size(),
+                            Toast.LENGTH_LONG).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -173,8 +207,32 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onPostExecute(Void param) {
+            SharedPreferences settings = getSharedPreferences("UserData", 0);
+            total_question = settings.getString("amount","10");
+            game_difficulty = settings.getString("diff","Any Difficulty");
+            category_name = settings.getString("category","All Category");
             fillSpinner();
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        SharedPreferences settings = getSharedPreferences("UserData", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("diff",game_difficulty);
+        editor.putString("amount",total_question);
+        editor.putString("category",category_name);
+        editor.apply();
+    }
+
+    public void onResume() {
+        super.onResume();
+        SharedPreferences settings = getSharedPreferences("UserData", 0);
+        total_question = settings.getString("amount","10");
+        game_difficulty = settings.getString("diff","Any Difficulty");
+        category_name = settings.getString("category","All Category");
     }
 }
 
